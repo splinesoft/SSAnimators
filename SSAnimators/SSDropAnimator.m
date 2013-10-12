@@ -20,14 +20,14 @@
                                   SSDropAnimator *animator,
                                   UIView *animationView) {
         
-        [animationView addSubview:toVC.view];
-        
         if( animator.direction == SSDropDirectionUp ) {
             [toVC.view setFrame:(CGRect){ { 0, CGRectGetHeight(animationView.frame) },
                                           toVC.view.frame.size }];
-            [animationView bringSubviewToFront:toVC.view];
+            [animationView insertSubview:toVC.view
+                            aboveSubview:fromVC.view];
         } else {
-            [animationView sendSubviewToBack:toVC.view];
+            [animationView insertSubview:toVC.view
+                            belowSubview:fromVC.view];
         }
     };
     
