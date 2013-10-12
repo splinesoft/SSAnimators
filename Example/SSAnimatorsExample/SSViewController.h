@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM( NSUInteger, SSTransitionType ) {
-  SSTransitionTypeZoom,
-  SSTransitionTypeDrop,
+    SSTransitionTypeZoom,
+    SSTransitionTypeDrop,
+    SSTransitionTypeZoomSlide,
 };
 
 @interface SSViewController : UITableViewController <UINavigationControllerDelegate>

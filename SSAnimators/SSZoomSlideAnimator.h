@@ -15,6 +15,7 @@ typedef NS_ENUM( NSUInteger, SSSlideDirection ) {
 
 @interface SSZoomSlideAnimator : SSBaseAnimator
 
-@property (nonatomic, assign) SSSlideDirection slideDirection;
++ (instancetype) zoomSlideAnimatorWithDirection:(SSSlideDirection)direction
+                                       duration:(NSTimeInterval)duration;
 
 @end

@@ -22,9 +22,9 @@
     animator.direction = direction;
     
     animator.beforeAnimationBlock = ^(UIViewController *fromVC,
-                                  UIViewController *toVC,
-                                  SSDropAnimator *animator,
-                                  UIView *animationView) {
+                                      UIViewController *toVC,
+                                      SSDropAnimator *animator,
+                                      UIView *animationView) {
         
         if( animator.direction == SSDropDirectionUp ) {
             [toVC.view setFrame:(CGRect){ { 0, CGRectGetHeight(animationView.frame) },

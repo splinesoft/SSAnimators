@@ -30,6 +30,7 @@
     self.dataSource = [[SSArrayDataSource alloc] initWithItems:@[
         @(SSTransitionTypeZoom),
         @(SSTransitionTypeDrop),
+        @(SSTransitionTypeZoomSlide),
     ]];
     self.dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell,
                                            NSNumber *type,
@@ -40,13 +41,16 @@
       
       switch( (SSTransitionType)[type unsignedIntegerValue] ) {
         case SSTransitionTypeZoom:
-          cell.textLabel.text = @"Zoom";
-          break;
+              cell.textLabel.text = @"Zoom";
+              break;
           case SSTransitionTypeDrop:
-          cell.textLabel.text = @"Drop";
-          break;
+              cell.textLabel.text = @"Drop";
+              break;
+          case SSTransitionTypeZoomSlide:
+              cell.textLabel.text = @"Zoom-Slide";
+              break;
         default:
-          break;
+              break;
       }
     };
   
@@ -56,11 +60,11 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  self.selectedTransitionType = (SSTransitionType)[[_dataSource itemAtIndexPath:indexPath] unsignedIntegerValue];
-  SSBigNumberViewController *newVC = [SSBigNumberViewController viewControllerWithNumber:arc4random_uniform(100)];
+    self.selectedTransitionType = (SSTransitionType)[[_dataSource itemAtIndexPath:indexPath] unsignedIntegerValue];
+    SSBigNumberViewController *newVC = [SSBigNumberViewController viewControllerWithNumber:arc4random_uniform(100)];
   
-  [self.navigationController pushViewController:newVC
-                                       animated:YES];
+    [self.navigationController pushViewController:newVC
+                                         animated:YES];
 }
 
 #pragma mark - UINavigationControllerDelegate
@@ -87,6 +91,11 @@
                                                          ? SSDropDirectionDown
                                                          : SSDropDirectionUp )
                                               duration:0.3f];
+      case SSTransitionTypeZoomSlide:
+          return [SSZoomSlideAnimator zoomSlideAnimatorWithDirection:( isPush
+                                                                       ? SSSlideDirectionLeft
+                                                                       : SSSlideDirectionRight )
+                                                            duration:0.8f];
     default:
       break;
   }
