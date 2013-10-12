@@ -8,6 +8,12 @@
 
 #import "SSAnimators.h"
 
+@interface SSDropAnimator ()
+
+@property (nonatomic, assign) SSDropDirection direction;
+
+@end
+
 @implementation SSDropAnimator
 
 + (instancetype)dropAnimatorWithDirection:(SSDropDirection)direction duration:(NSTimeInterval)duration {

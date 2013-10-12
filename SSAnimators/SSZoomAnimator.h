@@ -19,8 +19,6 @@ typedef NS_ENUM( NSUInteger, SSZoomDirection ) {
 
 @interface SSZoomAnimator : SSBaseAnimator
 
-@property (nonatomic, assign) SSZoomDirection direction;
-
 /**
  * Create an animator that performs a simple zoom in/out animation.
  */

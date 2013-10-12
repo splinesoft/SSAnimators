@@ -8,6 +8,12 @@
 
 #import "SSAnimators.h"
 
+@interface SSZoomAnimator ()
+
+@property (nonatomic, assign) SSZoomDirection direction;
+
+@end
+
 @implementation SSZoomAnimator
 
 + (instancetype) zoomAnimatorWithDirection:(SSZoomDirection)direction

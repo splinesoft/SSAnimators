@@ -15,8 +15,6 @@ typedef NS_ENUM( NSUInteger, SSDropDirection ) {
 
 @interface SSDropAnimator : SSBaseAnimator
 
-@property (nonatomic, assign) SSDropDirection direction;
-
 + (instancetype) dropAnimatorWithDirection:(SSDropDirection)direction
                                   duration:(NSTimeInterval)duration;
 
