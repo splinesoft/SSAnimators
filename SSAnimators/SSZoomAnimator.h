@@ -9,18 +9,22 @@
 #import "SSBaseAnimator.h"
 
 /**
- * iOS 7 animator object that does a zoom in/out animation.
+ * iOS 7 view controller animator object that does a simple zoom in/out animation.
  */
 
-typedef NS_ENUM( NSUInteger, ZZoomAnimationDirection ) {
-  ZZoomAnimationDirectionIn,
-  ZZoomAnimationDirectionOut
+typedef NS_ENUM( NSUInteger, SSZoomDirection ) {
+  SSZoomDirectionIn,
+  SSZoomDirectionOut
 };
 
 @interface SSZoomAnimator : SSBaseAnimator
 
-@property (nonatomic, assign) ZZoomAnimationDirection direction;
+@property (nonatomic, assign) SSZoomDirection direction;
 
-+ (instancetype) zoomAnimatorWithDirection:(ZZoomAnimationDirection)direction;
+/**
+ * Create an animator that performs a simple zoom in/out animation.
+ */
++ (instancetype) zoomAnimatorWithDirection:(SSZoomDirection)direction 
+                                  duration:(NSTimeInterval)duration;
 
 @end

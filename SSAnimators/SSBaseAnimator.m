@@ -8,55 +8,96 @@
 
 #import "SSBaseAnimator.h"
 
+@interface SSBaseAnimator ()
+
+// Try to fire an animation at the given index.
+- (void) fireAnimationAtIndex:(NSUInteger)index 
+                    inContext:(id <UIViewControllerContextTransitioning>)context;
+
+@end
+
 @implementation SSBaseAnimator
 
 #pragma mark - init
 
 - (id)init {
   if( ( self = [super init] ) ) {
-    self.animationOptions = UIViewAnimationOptionCurveEaseInOut;
-    self.animationDuration = 0.3f;
+    _animations = [NSMutableArray array];
+    _animating = NO;
   }
   
   return self;
 }
 
-+ (instancetype)animatorWithAnimationBlock:(SSAnimationBlock)block {
-  SSBaseAnimator *animator = [self new];
+#pragma mark - Animation Setup
+
+- (void)addAnimation:(SSAnimation *)animation {
+  if( _animating ) {
+    NSLog(@"ALERT: Added an animation to a transition already being animated.");
+    return;
+  }
   
-  animator.animationBlock = block;
+  [_animations addObject:animation];
+}
+
+- (NSTimeInterval)totalAnimationDuration {
+  NSTimeInterval total = 0.0f;
   
-  return animator;
+  for( SSAnimation *animation in _animations )
+    total += animation.animationDuration;
+  
+  return total;
+}
+
+#pragma mark - Animation Firing
+
+- (void) fireAnimationAtIndex:(NSUInteger)index 
+                    inContext:(id<UIViewControllerContextTransitioning>)context {
+    
+  if( index >= [_animations count] ) {
+    // Mark the animation complete.
+    UIViewController *fromViewController = [context viewControllerForKey:UITransitionContextFromViewControllerKey];
+    fromViewController.view.transform = CGAffineTransformIdentity;
+    [context completeTransition:![context transitionWasCancelled]];
+    _animating = NO;
+    return;
+  }
+  
+  SSAnimation *animation = _animations[index];
+  
+  [animation animateWithTransitionContext:context
+                                 animator:self
+                               completion:^(BOOL didFinish) {
+                                 [self fireAnimationAtIndex:( index + 1 )
+                                                  inContext:context];
+                               }];
 }
 
 #pragma mark - UIViewControllerAnimatedTransitioning
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return self.animationDuration;
+  if( [_animations count] == 0 )
+    return 0;
+  
+  return [self totalAnimationDuration];
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
+  
+  _animating = YES;
+  
   UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
   
-  [[transitionContext containerView] addSubview:toViewController.view];
-  toViewController.view.alpha = 0.0f;
+  if( self.beforeAnimationBlock )
+    self.beforeAnimationBlock( fromViewController, 
+                               toViewController, 
+                               self, 
+                               [transitionContext containerView] );
   
-  [UIView animateWithDuration:[self transitionDuration:transitionContext]
-                        delay:0.0f
-                      options:self.animationOptions
-                   animations:^{   
-                     
-     fromViewController.view.alpha = 0.0f;
-     toViewController.view.alpha = 1.0f;
-                     
-     if( self.animationBlock )
-       self.animationBlock( fromViewController, toViewController, self );
-                
-   } completion:^(BOOL finished) {
-     fromViewController.view.transform = CGAffineTransformIdentity;
-     [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
-   }];
+  // Start animating!
+  [self fireAnimationAtIndex:0
+                   inContext:transitionContext];
 }
 
 @end

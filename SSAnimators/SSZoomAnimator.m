@@ -6,18 +6,36 @@
 //  Copyright (c) 2013 Splinesoft. All rights reserved.
 //
 
-#import "SSZoomAnimator.h"
+#import "SSAnimators.h"
 
 @implementation SSZoomAnimator
 
-+ (instancetype) zoomAnimatorWithDirection:(ZZoomAnimationDirection)direction {
++ (instancetype) zoomAnimatorWithDirection:(SSZoomDirection)direction
+                                  duration:(NSTimeInterval)duration {
   
-  SSAnimationBlock zoomAnimationBlock = ^(UIViewController *fromVC,
-                                          UIViewController *toVC,
-                                          SSZoomAnimator *animator) {
+  SSZoomAnimator *animator = [SSZoomAnimator new];
+  
+  animator.direction = direction;
+  
+  animator.beforeAnimationBlock = ^(UIViewController *fromVC,
+                                    UIViewController *toVC,
+                                    SSZoomAnimator *animator,
+                                    UIView *animationView) {
+    toVC.view.alpha = 0.0f;
+    
+    [animationView addSubview:toVC.view];
+  };
+  
+  SSAnimationBlock animationBlock = ^(UIViewController *fromVC,
+                                      UIViewController *toVC,
+                                      SSZoomAnimator *animator,
+                                      UIView *animationView) {
+    fromVC.view.alpha = 0.0f;
+    toVC.view.alpha = 1.0f;
+    
     CGAffineTransform transform;
     
-    if( animator.direction == ZZoomAnimationDirectionIn )
+    if( animator.direction == SSZoomDirectionIn )
       transform = CGAffineTransformMakeScale(2.0f, 2.0f);
     else
       transform = CGAffineTransformMakeScale(0.01f, 0.01f);
@@ -25,11 +43,11 @@
     fromVC.view.transform = transform;
   };
   
-  SSZoomAnimator *animation = [SSZoomAnimator animatorWithAnimationBlock:zoomAnimationBlock];
+  [animator addAnimation:[SSAnimation animationWithBlock:animationBlock 
+                                                duration:duration
+                                                 options:UIViewAnimationOptionCurveEaseInOut]];
   
-  animation.direction = direction;
-  
-  return animation;
+  return animator;
 }
 
 @end

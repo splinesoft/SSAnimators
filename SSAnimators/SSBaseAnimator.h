@@ -13,35 +13,33 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-
-/**
- * Animation block. Each subclass is responsible for implementing this as appropriate.
- */
-typedef void (^SSAnimationBlock) (UIViewController *fromVC, 
-                                  UIViewController *toVC, 
-                                  id <UIViewControllerAnimatedTransitioning> animator);
+#import "SSAnimation.h"
 
 @interface SSBaseAnimator : NSObject <UIViewControllerAnimatedTransitioning>
 
 /**
- * Animation block. Implement your animations here.
+ * Return YES if we are currently animating.
  */
-@property (nonatomic, copy) SSAnimationBlock animationBlock;
+@property (nonatomic, readonly, getter = isAnimating) BOOL animating;
 
 /**
- * Animation curve to use for the animation.
- * Defaults to UIViewAnimationOptionCurveEaseInOut.
+ * Optional before-animation block, called just before the animation begins.
  */
-@property (nonatomic, assign) UIViewAnimationOptions animationOptions;
+@property (nonatomic, copy) SSAnimationBlock beforeAnimationBlock;
 
 /**
- * Animation duration. Defaults to 0.3f.
+ * Animation blocks.
  */
-@property (nonatomic, assign) CGFloat animationDuration;
+@property (nonatomic, strong) NSMutableArray *animations;
 
 /**
- * Helper constructor.
+ * Total animation duration is the sum of the durations in each individual animation.
  */
-+ (instancetype) animatorWithAnimationBlock:(SSAnimationBlock)block;
+- (NSTimeInterval) totalAnimationDuration;
+
+/**
+ * Add an animation.
+ */
+- (void) addAnimation:(SSAnimation *)animation;
 
 @end

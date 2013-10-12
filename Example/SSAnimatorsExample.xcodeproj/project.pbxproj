@@ -20,6 +20,7 @@
 		5E31AE5118048AC900BEEA7F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E31AE3018048AC900BEEA7F /* UIKit.framework */; };
 		5E31AE5918048AC900BEEA7F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5E31AE5718048AC900BEEA7F /* InfoPlist.strings */; };
 		5E31AE5B18048AC900BEEA7F /* SSAnimatorsExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E31AE5A18048AC900BEEA7F /* SSAnimatorsExampleTests.m */; };
+		5E31AE681804BA3B00BEEA7F /* SSBigNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E31AE671804BA3B00BEEA7F /* SSBigNumberViewController.m */; };
 		5EBA8364FF7C48F4BAD76133 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8805F327940B4C6CA8BAF1DA /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +54,8 @@
 		5E31AE5618048AC900BEEA7F /* SSAnimatorsExampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SSAnimatorsExampleTests-Info.plist"; sourceTree = "<group>"; };
 		5E31AE5818048AC900BEEA7F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5E31AE5A18048AC900BEEA7F /* SSAnimatorsExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSAnimatorsExampleTests.m; sourceTree = "<group>"; };
+		5E31AE661804BA3B00BEEA7F /* SSBigNumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSBigNumberViewController.h; sourceTree = "<group>"; };
+		5E31AE671804BA3B00BEEA7F /* SSBigNumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSBigNumberViewController.m; sourceTree = "<group>"; };
 		8805F327940B4C6CA8BAF1DA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -122,6 +125,8 @@
 				5E31AE4518048AC900BEEA7F /* SSViewController.m */,
 				5E31AE4718048AC900BEEA7F /* Images.xcassets */,
 				5E31AE3318048AC900BEEA7F /* Supporting Files */,
+				5E31AE661804BA3B00BEEA7F /* SSBigNumberViewController.h */,
+				5E31AE671804BA3B00BEEA7F /* SSBigNumberViewController.m */,
 			);
 			path = SSAnimatorsExample;
 			sourceTree = "<group>";
@@ -289,6 +294,7 @@
 			files = (
 				5E31AE4618048AC900BEEA7F /* SSViewController.m in Sources */,
 				5E31AE3D18048AC900BEEA7F /* SSAppDelegate.m in Sources */,
+				5E31AE681804BA3B00BEEA7F /* SSBigNumberViewController.m in Sources */,
 				5E31AE3918048AC900BEEA7F /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
